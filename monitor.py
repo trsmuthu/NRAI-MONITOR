@@ -177,16 +177,24 @@ def run_check():
 
 
 def main():
-    print(f"==================================================")
-    print(f" NRAI Multi-Page Real-Time Monitor Started")
-    print(f" Monitoring 3 URLs: {TARGET_URLS}")
-    print(f" iPhone Topic: {NTFY_TOPIC}")
-    print(f"==================================================")
+        if "--test" in sys.argv:
+      print("Sending test notification to iPhone...")
+      send_iphone_push(
+          "TEST ALERT: NRAI Multi-Page Monitor connected to iPhone!",
+          TARGET_URLS[0],
+      )
+      return
 
-    if "--test" in sys.argv:
-        print("Sending test notification to iPhone...")
-        send_iphone_push("TEST ALERT: NRAI Multi-Page Monitor connected to iPhone!", TARGET_URLS[0])
-        return
+    # 👉 SEND A TEST ALERT ON EVERY MANUAL CLOUD RUN SO YOUR PHONE DINGS:
+    send_iphone_push(
+        "✅ NRAI Cloud Monitor Active! Scanning all 3 circular pages.",
+        TARGET_URLS[0],
+    )
+
+    if "--once" in sys.argv or os.getenv("GITHUB_ACTIONS"):
+      print("Running single check mode (Cloud / GitHub Actions)...")
+      run_check()
+      return
 
     if "--once" in sys.argv or os.getenv("GITHUB_ACTIONS"):
         print("Running single check mode (Cloud / GitHub Actions)...")
