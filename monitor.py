@@ -22,7 +22,6 @@ NTFY_TOPIC = os.getenv("NTFY_TOPIC", "nrai-live-updates-iphone")
 
 # Monitors all 3 pages where NRAI publishes circulars
 TARGET_URLS = [
-    "https://www.thenrai.in/news_events.aspx",
     "https://www.thenrai.in/news_events_details.aspx",
     "https://www.thenrai.in/",
 ]
